@@ -1,12 +1,22 @@
-import { useLocalStorage, useNameData } from "@/Hooks"
-import { NameStorage } from "@/Types"
+import { createContext } from "react"
+import Selection from "@/Pages/Selection"
+import { useNameData } from "@/Hooks"
+import { NameRecords } from "@/Types"
+
+export const DataContext = createContext<NameRecords[]>([])
 
 function App() {
 	const data = useNameData()
-	const [records, setRecords] = useLocalStorage<NameStorage[]>("choices", [])
-	console.log(data)
 
-	return <h1 className="text-5xl font-bold underline">Hello world!</h1>
+	if (data.loading) {
+		return <h1>Loading</h1>
+	}
+
+	return (
+		<DataContext.Provider value={data.data}>
+			<Selection />
+		</DataContext.Provider>
+	)
 }
 
 export default App
