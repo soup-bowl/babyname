@@ -1,14 +1,20 @@
-import { useLocalStorage } from "@/Hooks"
+import { useLocalStorage, useLocalStorageSingle } from "@/Hooks"
 import { NameRecords, NameStorage } from "@/Types"
 import { pickRandomName } from "@/Utils"
 import { useContext, useState } from "react"
 import { DataContext } from "@/Pages/App"
 import Review from "@/Pages/Review"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/Components/ui/card"
-import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription, DialogHeader } from "@/Components/ui/dialog"
+import {
+	Dialog,
+	DialogTrigger,
+	DialogContent,
+	DialogTitle,
+	DialogDescription,
+	DialogHeader,
+} from "@/Components/ui/dialog"
 import { Button } from "@/Components/ui/button"
 import { Input } from "@/Components/ui/input"
-
 
 function ReviewDialog() {
 	return (
@@ -29,7 +35,7 @@ function ReviewDialog() {
 }
 
 function SurnameDialog() {
-	const [name, setName] = useState<string>("Smith")
+	const [name, setName] = useLocalStorageSingle("eggsalad-surname", "Smith")
 
 	return (
 		<Dialog>
@@ -82,17 +88,20 @@ function Selection() {
 			<Card className="text-center text-2xl p-6 max-w-lg w-full mx-4">
 				<CardHeader>
 					<CardTitle className="text-4xl">
-						{name.Name}&nbsp;<SurnameDialog />
+						{name.Name}&nbsp;
+						<SurnameDialog />
 					</CardTitle>
 					<CardDescription className="text-2xl">{name.Gender}</CardDescription>
 				</CardHeader>
-				<CardContent>
-					{name.Meaning}
-				</CardContent>
+				<CardContent>{name.Meaning}</CardContent>
 				<CardFooter className="flex justify-between gap-4">
-					<Button size="lg" onClick={() => submitNameChoice(false)}>No</Button>
+					<Button size="lg" onClick={() => submitNameChoice(false)}>
+						No
+					</Button>
 					<ReviewDialog />
-					<Button size="lg" onClick={() => submitNameChoice(true)}>Yes</Button>
+					<Button size="lg" onClick={() => submitNameChoice(true)}>
+						Yes
+					</Button>
 				</CardFooter>
 			</Card>
 		</>

@@ -9,37 +9,39 @@ function Review() {
 
 	const RemoveChoice = (name: NameStorage) => {
 		setRecords((names) => {
-			const updatedRecords = names.filter(r => r !== name);
-			return updatedRecords;
-		});
+			const updatedRecords = names.filter((r) => r !== name)
+			return updatedRecords
+		})
 	}
 
-	return (<>
-		<ScrollArea className="h-[400px] w-full rounded-md border p-4">
-			<Table>
-				<TableHeader>
-					<TableRow>
-						<TableHead className="w-[100px]">Name</TableHead>
-						<TableHead>Gender</TableHead>
-						<TableHead>Decision</TableHead>
-						<TableHead className="text-right">Actions</TableHead>
-					</TableRow>
-				</TableHeader>
-				<TableBody>
-					{records.map((name) => (
-						<TableRow key={name.Name}>
-							<TableCell className="font-medium">{name.Name}</TableCell>
-							<TableCell>{name.Gender}</TableCell>
-							<TableCell>{name.Accepted ? <>✔️</> : <>❌</>}</TableCell>
-							<TableCell className="text-right">
-								<Button onClick={() => RemoveChoice(name)}>Delete</Button>
-							</TableCell>
+	return (
+		<>
+			<ScrollArea className="h-[400px] w-full rounded-md border p-4">
+				<Table>
+					<TableHeader>
+						<TableRow>
+							<TableHead className="w-[100px]">Name</TableHead>
+							<TableHead>Gender</TableHead>
+							<TableHead>Decision</TableHead>
+							<TableHead className="text-right">Actions</TableHead>
 						</TableRow>
-					))}
-				</TableBody>
-			</Table>
-		</ScrollArea>
-	</>)
+					</TableHeader>
+					<TableBody>
+						{records.map((name) => (
+							<TableRow key={name.Name}>
+								<TableCell className="font-medium">{name.Name}</TableCell>
+								<TableCell>{name.Gender}</TableCell>
+								<TableCell>{name.Accepted ? <>✔️</> : <>❌</>}</TableCell>
+								<TableCell className="text-right">
+									<Button onClick={() => RemoveChoice(name)}>Delete</Button>
+								</TableCell>
+							</TableRow>
+						))}
+					</TableBody>
+				</Table>
+			</ScrollArea>
+		</>
+	)
 }
 
 export default Review

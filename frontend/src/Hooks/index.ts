@@ -1,2 +1,2 @@
-export { default as useLocalStorage } from "./LocalStorage"
+export { useLocalStorage, useLocalStorageSingle } from "./LocalStorage"
 export { default as useNameData } from "./Names"
