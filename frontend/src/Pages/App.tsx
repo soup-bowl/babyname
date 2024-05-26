@@ -14,7 +14,12 @@ function App() {
 
 	return (
 		<DataContext.Provider value={data.data}>
-			<Selection />
+			<div className="flex flex-col gap-4 items-center justify-center min-h-screen bg-gray-200">
+				<Selection />
+				<p className="text-gray-500">
+					made by <a className="underline" href="https://github.com/soup-bowl">soup-bowl</a>
+				</p>
+			</div>
 		</DataContext.Provider>
 	)
 }
