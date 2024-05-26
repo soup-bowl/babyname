@@ -7,6 +7,7 @@ import Review from "@/Pages/Review"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/Components/ui/card"
 import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription, DialogHeader } from "@/Components/ui/dialog"
 import { Button } from "@/Components/ui/button"
+import { Input } from "@/Components/ui/input"
 
 
 function ReviewDialog() {
@@ -20,6 +21,26 @@ function ReviewDialog() {
 					<DialogTitle>Review so far</DialogTitle>
 					<DialogDescription>
 						<Review />
+					</DialogDescription>
+				</DialogHeader>
+			</DialogContent>
+		</Dialog>
+	)
+}
+
+function SurnameDialog() {
+	const [name, setName] = useState<string>("Smith")
+
+	return (
+		<Dialog>
+			<DialogTrigger>
+				<span className="hover:underline">{name}</span>
+			</DialogTrigger>
+			<DialogContent>
+				<DialogHeader>
+					<DialogTitle>Change Surname</DialogTitle>
+					<DialogDescription>
+						<Input value={name} onChange={(e) => setName(e.target.value)} />
 					</DialogDescription>
 				</DialogHeader>
 			</DialogContent>
@@ -60,7 +81,9 @@ function Selection() {
 		<>
 			<Card className="text-center text-2xl p-6 max-w-lg w-full mx-4">
 				<CardHeader>
-					<CardTitle className="text-4xl">{name.Name}</CardTitle>
+					<CardTitle className="text-4xl">
+						{name.Name}&nbsp;<SurnameDialog />
+					</CardTitle>
 					<CardDescription className="text-2xl">{name.Gender}</CardDescription>
 				</CardHeader>
 				<CardContent>
