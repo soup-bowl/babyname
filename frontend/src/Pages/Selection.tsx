@@ -3,6 +3,8 @@ import { NameRecords, NameStorage } from "@/Types"
 import { pickRandomName } from "@/Utils"
 import { useContext, useState } from "react"
 import { DataContext } from "@/Pages/App"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/Components/card"
+import { Button } from "@/Components/button"
 
 function Selection() {
 	const data = useContext(DataContext)
@@ -34,10 +36,20 @@ function Selection() {
 	}
 
 	return (
-		<div className="text-xl">
-			<h1 className="text-5xl mb-5 font-bold">{name.Name}</h1>
-			<button onClick={() => submitNameChoice(true)}>Yes</button>
-			<button onClick={() => submitNameChoice(false)}>No</button>
+		<div className="flex items-center justify-center min-h-screen bg-gray-200">
+			<Card className="text-center text-2xl p-6 max-w-lg w-full mx-4">
+				<CardHeader>
+					<CardTitle className="text-4xl">{name.Name}</CardTitle>
+					<CardDescription className="text-2xl">{name.Gender}</CardDescription>
+				</CardHeader>
+				<CardContent>
+					{name.Meaning}
+				</CardContent>
+				<CardFooter className="flex justify-between gap-4">
+					<Button size="lg" onClick={() => submitNameChoice(true)}>Yes</Button>
+					<Button size="lg" onClick={() => submitNameChoice(false)}>No</Button>
+				</CardFooter>
+			</Card>
 		</div>
 	)
 }
