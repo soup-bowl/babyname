@@ -6,6 +6,9 @@ on:
       - main
     paths: 
       - frontend/**
+  release:
+    types:
+      - published
   workflow_dispatch: 
 
 concurrency:
@@ -39,7 +42,7 @@ jobs:
           projectName: cheesetoastie
           directory: ./frontend/dist
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          branch: 'eggy-test'
+          branch: ${{ github.event_name == 'push' && 'eggdev' || 'main' }}
 
       - name: Debriefing
         run: echo '🚀 Deployed to [${{ steps.cfp.outputs.url }}](${{ steps.cfp.outputs.url }}).' >> $GITHUB_STEP_SUMMARY
