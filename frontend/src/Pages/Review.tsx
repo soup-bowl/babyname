@@ -14,18 +14,18 @@ function Review() {
 		})
 	}
 
-	const ReviewSort = (a:NameStorage, b:NameStorage) => {
+	const ReviewSort = (a: NameStorage, b: NameStorage) => {
 		if (Number(a.Accepted) !== Number(b.Accepted)) {
-			return Number(b.Accepted) - Number(a.Accepted);
+			return Number(b.Accepted) - Number(a.Accepted)
 		}
 
-		const genderComparison = a.Gender.localeCompare(b.Gender);
+		const genderComparison = a.Gender.localeCompare(b.Gender)
 		if (genderComparison !== 0) {
-			return genderComparison;
+			return genderComparison
 		}
 
-		return a.Name.localeCompare(b.Name);
-	};
+		return a.Name.localeCompare(b.Name)
+	}
 
 	return (
 		<>
