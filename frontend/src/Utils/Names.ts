@@ -1,12 +1,7 @@
 import { useState, useEffect } from "react"
+import { NameRecords } from "@/Utils/Names.type"
 
 const NAME_SOURCE = "https://gist.githubusercontent.com/soup-bowl/63cd64c5e52653be2600b44c330b9e3d/raw/names.csv"
-
-interface NameRecords {
-	Name: string
-	Gender: string
-	Meaning: string
-}
 
 const fetchData = async (): Promise<string> => {
 	const response = await fetch(NAME_SOURCE)
