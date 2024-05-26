@@ -1,6 +1,8 @@
-# egg-salad
+# 🍳 Egg Salad
 
-Codename based on a [Big Bang Theory reference](https://www.imdb.com/title/tt2571320/quotes/?item=qt1855883&ref_=ext_shr_lnk).
+A React-based web application simply for deciding on baby names. The names are sourced [from this Gist](https://gist.github.com/soup-bowl/63cd64c5e52653be2600b44c330b9e3d).
+
+*Codename based on a [Big Bang Theory reference](https://www.imdb.com/title/tt2571320/quotes/?item=qt1855883&ref_=ext_shr_lnk).*
 
 ### Testing Offline Capabilities
 
