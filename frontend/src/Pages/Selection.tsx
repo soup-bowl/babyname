@@ -3,17 +3,13 @@ import { NameRecords, NameStorage } from "@/Types"
 import { pickRandomName } from "@/Utils"
 import { useContext, useState } from "react"
 import { DataContext } from "@/Pages/App"
+import Review from "@/Pages/Review"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/Components/ui/card"
 import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription, DialogHeader } from "@/Components/ui/dialog"
 import { Button } from "@/Components/ui/button"
-import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/Components/ui/table"
-import { ScrollArea } from "@/Components/ui/scroll-area"
 
-interface Props {
-	chosenNames: NameStorage[]
-}
 
-function Review({ chosenNames }: Props) {
+function ReviewDialog() {
 	return (
 		<Dialog>
 			<DialogTrigger>
@@ -23,28 +19,7 @@ function Review({ chosenNames }: Props) {
 				<DialogHeader>
 					<DialogTitle>Review so far</DialogTitle>
 					<DialogDescription>
-						<ScrollArea className="h-[400px] w-full rounded-md border p-4">
-							<Table>
-								<TableHeader>
-									<TableRow>
-										<TableHead className="w-[100px]">Name</TableHead>
-										<TableHead>Gender</TableHead>
-										<TableHead>Decision</TableHead>
-										<TableHead className="text-right">Actions</TableHead>
-									</TableRow>
-								</TableHeader>
-								<TableBody>
-									{chosenNames.map((name) => (
-										<TableRow key={name.Name}>
-											<TableCell className="font-medium">{name.Name}</TableCell>
-											<TableCell>{name.Gender}</TableCell>
-											<TableCell>{name.Accepted ? <>✔️</> : <>❌</>}</TableCell>
-											<TableCell className="text-right"></TableCell>
-										</TableRow>
-									))}
-								</TableBody>
-							</Table>
-						</ScrollArea>
+						<Review />
 					</DialogDescription>
 				</DialogHeader>
 			</DialogContent>
@@ -94,7 +69,7 @@ function Selection() {
 					</CardContent>
 					<CardFooter className="flex justify-between gap-4">
 						<Button size="lg" onClick={() => submitNameChoice(true)}>Yes</Button>
-						<Review chosenNames={records} />
+						<ReviewDialog />
 						<Button size="lg" onClick={() => submitNameChoice(false)}>No</Button>
 					</CardFooter>
 				</Card>
