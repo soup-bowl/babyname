@@ -22,7 +22,7 @@ function ReviewDialog() {
 			<DialogTrigger>
 				<Button size="lg">Review</Button>
 			</DialogTrigger>
-			<DialogContent>
+			<DialogContent className="max-w-screen-md">
 				<DialogHeader>
 					<DialogTitle>Review so far</DialogTitle>
 					<DialogDescription>

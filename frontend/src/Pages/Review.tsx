@@ -1,11 +1,12 @@
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/Components/ui/table"
 import { ScrollArea } from "@/Components/ui/scroll-area"
-import { useLocalStorage } from "@/Hooks"
+import { useLocalStorage, useLocalStorageSingle } from "@/Hooks"
 import { NameStorage } from "@/Types"
 import { Button } from "@/Components/ui/button"
 
 function Review() {
 	const [records, setRecords] = useLocalStorage<NameStorage[]>("eggsalad-choices", [])
+	const [surname] = useLocalStorageSingle("eggsalad-surname", "Smith")
 
 	const RemoveChoice = (name: NameStorage) => {
 		setRecords((names) => {
@@ -30,13 +31,13 @@ function Review() {
 	return (
 		<>
 			<ScrollArea className="h-[400px] w-full">
-				<Table>
+				<Table className="text-black">
 					<TableHeader>
 						<TableRow>
-							<TableHead className="w-[100px]">Name</TableHead>
+							<TableHead>Name</TableHead>
 							<TableHead>Gender</TableHead>
 							<TableHead>Decision</TableHead>
-							<TableHead>Actions</TableHead>
+							<TableHead className="w-[120px]">Actions</TableHead>
 						</TableRow>
 					</TableHeader>
 					<TableBody className="text-xl">
@@ -45,7 +46,9 @@ function Review() {
 
 							return (
 								<TableRow className={chosenColour} key={name.Name}>
-									<TableCell className="font-medium">{name.Name}</TableCell>
+									<TableCell className="font-medium">
+										{name.Name}&nbsp;{surname}
+									</TableCell>
 									<TableCell>{name.Gender}</TableCell>
 									<TableCell>{name.Accepted ? <>✔️</> : <>❌</>}</TableCell>
 									<TableCell>
