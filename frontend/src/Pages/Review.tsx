@@ -42,7 +42,7 @@ function Review() {
 					</TableHeader>
 					<TableBody className="text-xl">
 						{records.sort(ReviewSort).map((name) => {
-							const chosenColour = (name.Accepted) ? "bg-green-100" : "bg-red-100"
+							const chosenColour = name.Accepted ? "bg-green-100" : "bg-red-100"
 
 							return (
 								<TableRow className={chosenColour} key={name.Name}>
@@ -52,7 +52,9 @@ function Review() {
 									<TableCell>{name.Gender}</TableCell>
 									<TableCell>{name.Accepted ? <>✔️</> : <>❌</>}</TableCell>
 									<TableCell>
-										<Button size="sm" onClick={() => RemoveChoice(name)}>Delete</Button>
+										<Button size="sm" onClick={() => RemoveChoice(name)}>
+											Delete
+										</Button>
 									</TableCell>
 								</TableRow>
 							)
