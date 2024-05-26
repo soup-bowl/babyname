@@ -1,4 +1,5 @@
-import { NameStorage, useLocalStorage, useNameData } from "@/Utils"
+import { useLocalStorage, useNameData } from "@/Hooks"
+import { NameStorage } from "@/Types"
 
 function App() {
 	const data = useNameData()

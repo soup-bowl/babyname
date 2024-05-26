@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { NameRecords } from "@/Utils/Names.type"
+import { NameRecords } from "@/Types/Names"
 
 const NAME_SOURCE = "https://gist.githubusercontent.com/soup-bowl/63cd64c5e52653be2600b44c330b9e3d/raw/names.csv"
 
