@@ -42,7 +42,7 @@ jobs:
           projectName: eggsalad
           directory: ./frontend/dist
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.event_name == 'push' && 'eggdev' || 'main' }}
+          branch: ${{ github.event_name == 'release' && 'main' || 'eggdev' }}
 
       - name: Debriefing
         run: echo '🚀 Deployed to [${{ steps.cfp.outputs.url }}](${{ steps.cfp.outputs.url }}).' >> $GITHUB_STEP_SUMMARY
