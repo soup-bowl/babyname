@@ -14,6 +14,19 @@ function Review() {
 		})
 	}
 
+	const ReviewSort = (a:NameStorage, b:NameStorage) => {
+		if (Number(a.Accepted) !== Number(b.Accepted)) {
+			return Number(b.Accepted) - Number(a.Accepted);
+		}
+
+		const genderComparison = a.Gender.localeCompare(b.Gender);
+		if (genderComparison !== 0) {
+			return genderComparison;
+		}
+
+		return a.Name.localeCompare(b.Name);
+	};
+
 	return (
 		<>
 			<ScrollArea className="h-[400px] w-full">
@@ -27,7 +40,7 @@ function Review() {
 						</TableRow>
 					</TableHeader>
 					<TableBody>
-						{records.map((name) => (
+						{records.sort(ReviewSort).map((name) => (
 							<TableRow key={name.Name}>
 								<TableCell className="font-medium">{name.Name}</TableCell>
 								<TableCell>{name.Gender}</TableCell>
