@@ -16,14 +16,14 @@ function Review() {
 
 	return (
 		<>
-			<ScrollArea className="h-[400px] w-full rounded-md border p-4">
+			<ScrollArea className="h-[400px] w-full">
 				<Table>
 					<TableHeader>
 						<TableRow>
 							<TableHead className="w-[100px]">Name</TableHead>
 							<TableHead>Gender</TableHead>
 							<TableHead>Decision</TableHead>
-							<TableHead className="text-right">Actions</TableHead>
+							<TableHead>Actions</TableHead>
 						</TableRow>
 					</TableHeader>
 					<TableBody>
@@ -32,7 +32,7 @@ function Review() {
 								<TableCell className="font-medium">{name.Name}</TableCell>
 								<TableCell>{name.Gender}</TableCell>
 								<TableCell>{name.Accepted ? <>✔️</> : <>❌</>}</TableCell>
-								<TableCell className="text-right">
+								<TableCell>
 									<Button onClick={() => RemoveChoice(name)}>Delete</Button>
 								</TableCell>
 							</TableRow>
