@@ -39,17 +39,21 @@ function Review() {
 							<TableHead>Actions</TableHead>
 						</TableRow>
 					</TableHeader>
-					<TableBody>
-						{records.sort(ReviewSort).map((name) => (
-							<TableRow key={name.Name}>
-								<TableCell className="font-medium">{name.Name}</TableCell>
-								<TableCell>{name.Gender}</TableCell>
-								<TableCell>{name.Accepted ? <>✔️</> : <>❌</>}</TableCell>
-								<TableCell>
-									<Button onClick={() => RemoveChoice(name)}>Delete</Button>
-								</TableCell>
-							</TableRow>
-						))}
+					<TableBody className="text-xl">
+						{records.sort(ReviewSort).map((name) => {
+							const chosenColour = (name.Accepted) ? "bg-green-100" : "bg-red-100"
+
+							return (
+								<TableRow className={chosenColour} key={name.Name}>
+									<TableCell className="font-medium">{name.Name}</TableCell>
+									<TableCell>{name.Gender}</TableCell>
+									<TableCell>{name.Accepted ? <>✔️</> : <>❌</>}</TableCell>
+									<TableCell>
+										<Button size="sm" onClick={() => RemoveChoice(name)}>Delete</Button>
+									</TableCell>
+								</TableRow>
+							)
+						})}
 					</TableBody>
 				</Table>
 			</ScrollArea>
