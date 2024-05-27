@@ -1,0 +1,13 @@
+tasks:
+  - name: Frontend
+    before: |
+      npm install
+    command: |
+      npm start
+
+ports:
+  - name: Frontend
+    port: 3000
+    description: React PWA app
+    visibility: public
+    onOpen: open-browser
