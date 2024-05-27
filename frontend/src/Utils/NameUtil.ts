@@ -23,17 +23,16 @@ export const pickRandomName = (names: NameRecords[], existing: NameStorage[]): N
 	return name
 }
 
-
-export const compressNames = (names: NameCompressed[]):string => {
-	return names.map(d => `${d.Name}:${Number(d.Accepted)}`).join(',')
+export const compressNames = (names: NameCompressed[]): string => {
+	return names.map((d) => `${d.Name}:${Number(d.Accepted)}`).join(",")
 }
 
 export const decompressNames = (compressed: string): NameCompressed[] => {
-    return compressed.split(',').map(pair => {
-        const [name, accepted] = pair.split(':');
-        return {
-            Name: name,
-            Accepted: Boolean(Number(accepted))
-        };
-    });
+	return compressed.split(",").map((pair) => {
+		const [name, accepted] = pair.split(":")
+		return {
+			Name: name,
+			Accepted: Boolean(Number(accepted)),
+		}
+	})
 }

@@ -12,12 +12,12 @@ import {
 	DialogDescription,
 	DialogHeader,
 } from "@/Components/ui/dialog"
-import { QRCodeCanvas, QRCodeSVG } from "qrcode.react"
+import { QRCodeSVG } from "qrcode.react"
 import { compressNames, decompressNames } from "@/Utils"
 import QrCodeReader from "react-qrcode-reader"
 
 function ShareDialog({ data }: { data: NameStorage[] }) {
-	const names = compressNames(data.map(a => ({ Name: a.Name, Accepted: a.Accepted })))
+	const names = compressNames(data.map((a) => ({ Name: a.Name, Accepted: a.Accepted })))
 
 	return (
 		<Dialog>
@@ -27,13 +27,8 @@ function ShareDialog({ data }: { data: NameStorage[] }) {
 			<DialogContent className="max-w-screen-sm">
 				<DialogHeader>
 					<DialogTitle>Share</DialogTitle>
-					<DialogDescription className="flex flex-column justify-center gap-4">
-						<div>
-							<QRCodeSVG value={names} className="max-w-sm" />
-						</div>
-						<div>
-							<QRCodeCanvas value={names} className="max-w-sm" />
-						</div>
+					<DialogDescription className="flex justify-center">
+						<QRCodeSVG value={names} width="100%" height="400" />
 					</DialogDescription>
 				</DialogHeader>
 			</DialogContent>
@@ -53,10 +48,15 @@ function CompareDialog({ setData }: { setData: (value: NameCompressed[]) => void
 				<DialogHeader>
 					<DialogTitle>Compare</DialogTitle>
 					<DialogDescription className="flex justify-center">
-						<QrCodeReader delay={100} width={600} height={500} action={(scan) => {
-							setData(decompressNames(scan))
-							setDialogState(false)
-						}} />
+						<QrCodeReader
+							delay={100}
+							width={600}
+							height={500}
+							action={(scan) => {
+								setData(decompressNames(scan))
+								setDialogState(false)
+							}}
+						/>
 					</DialogDescription>
 				</DialogHeader>
 			</DialogContent>
@@ -109,7 +109,9 @@ function Review() {
 								return (
 									<TableRow className={chosenColour} key={name.Name}>
 										<TableCell className="text-left">
-											<p className="font-medium">{name.Name}&nbsp;{surname}</p>
+											<p className="font-medium">
+												{name.Name}&nbsp;{surname}
+											</p>
 											<p className="text-sm">{name.Gender}</p>
 										</TableCell>
 										<TableCell>
