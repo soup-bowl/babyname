@@ -84,8 +84,19 @@ function Review() {
 	}
 
 	const ReviewSort = (a: NameStorage, b: NameStorage) => {
+		const otherAcceptedPriority = (value: boolean | undefined) => {
+			if (value === true) return 2
+			if (value === false) return 1
+			return 0
+		}
+
 		if (Number(a.UserAccepted) !== Number(b.UserAccepted)) {
 			return Number(b.UserAccepted) - Number(a.UserAccepted)
+		}
+
+		const otherAcceptedComparison = otherAcceptedPriority(b.OtherAccepted) - otherAcceptedPriority(a.OtherAccepted)
+		if (otherAcceptedComparison !== 0) {
+			return otherAcceptedComparison
 		}
 
 		const genderComparison = a.Gender.localeCompare(b.Gender)
