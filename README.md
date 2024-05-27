@@ -9,3 +9,5 @@ If you want to test the PWA functionality locally, you can add the following to 
 ```js
 devOptions: { enabled: true },
 ```
+
+All emojis designed by [OpenMoji](https://openmoji.org/) – the open-source emoji and icon project. License: [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/#)
