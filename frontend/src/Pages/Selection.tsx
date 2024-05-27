@@ -68,7 +68,7 @@ function Selection() {
 						Name: name.Name,
 						Gender: name.Gender,
 						Meaning: name.Meaning,
-						Accepted: decision,
+						UserAccepted: decision,
 					},
 				]
 				console.log(updatedRecords)
