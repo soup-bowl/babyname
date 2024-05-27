@@ -38,20 +38,20 @@ export const decompressNames = (compressed: string): NameCompressed[] => {
 }
 
 export const compareNameChoices = (nameRecords: NameRecords[], nameCompressed: NameCompressed[]): NameComparisons[] => {
-    const nameCompressedMap = new Map<string, boolean>();
-    nameCompressed.forEach(nc => {
-        nameCompressedMap.set(nc.Name, nc.Accepted);
-    });
+	const nameCompressedMap = new Map<string, boolean>()
+	nameCompressed.forEach((nc) => {
+		nameCompressedMap.set(nc.Name, nc.Accepted)
+	})
 
-    const nameComparisons: NameComparisons[] = nameRecords.map(nr => {
-        const otherAccepted = nameCompressedMap.get(nr.Name);
-        return {
-            Name: nr.Name,
-            Gender: nr.Gender,
-            UserAccepted: 'Accepted' in nr ? (nr as NameStorage).Accepted : false,
-            OtherAccepted: otherAccepted !== undefined ? otherAccepted : undefined
-        };
-    });
+	const nameComparisons: NameComparisons[] = nameRecords.map((nr) => {
+		const otherAccepted = nameCompressedMap.get(nr.Name)
+		return {
+			Name: nr.Name,
+			Gender: nr.Gender,
+			UserAccepted: "Accepted" in nr ? (nr as NameStorage).Accepted : false,
+			OtherAccepted: otherAccepted !== undefined ? otherAccepted : undefined,
+		}
+	})
 
-    return nameComparisons;
+	return nameComparisons
 }
