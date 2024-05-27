@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/Components/ui/table"
 import { ScrollArea } from "@/Components/ui/scroll-area"
 import { useLocalStorage, useLocalStorageSingle } from "@/Hooks"
-import { NameStorage } from "@/Types"
+import { NameCompressed, NameStorage } from "@/Types"
 import { Button } from "@/Components/ui/button"
 import {
 	Dialog,
@@ -13,7 +13,8 @@ import {
 	DialogHeader,
 } from "@/Components/ui/dialog"
 import QrSvg from '@wojtekmaj/react-qr-svg'
-import { compressNames } from "@/Utils"
+import { compressNames, decompressNames } from "@/Utils"
+import QrCodeReader from "react-qrcode-reader"
 
 function ShareDialog({ data }: { data: NameStorage[] }) {
 	const names = compressNames(data.map(a => ({ Name: a.Name, Accepted: a.Accepted })))
@@ -35,9 +36,33 @@ function ShareDialog({ data }: { data: NameStorage[] }) {
 	)
 }
 
+function CompareDialog({setData}: { setData: (value: NameCompressed[]) => void }) {
+	const [dialogState, setDialogState] = useState<boolean>(false)
+
+	return (
+		<Dialog open={dialogState} onOpenChange={setDialogState}>
+			<DialogTrigger>
+				<Button>Compare</Button>
+			</DialogTrigger>
+			<DialogContent className="max-w-screen-sm">
+				<DialogHeader>
+					<DialogTitle>Compare</DialogTitle>
+					<DialogDescription className="flex justify-center">
+						<QrCodeReader delay={100} width={600} height={500} action={(scan) => {
+							setData(decompressNames(scan))
+							setDialogState(false)
+						}} />
+					</DialogDescription>
+				</DialogHeader>
+			</DialogContent>
+		</Dialog>
+	)
+}
+
 function Review() {
 	const [records, setRecords] = useLocalStorage<NameStorage[]>("eggsalad-choices", [])
 	const [recordsSorted, setRecordsSorted] = useState<NameStorage[]>([])
+	const [compares, setCompares] = useState<NameCompressed[]>([])
 	const [surname] = useLocalStorageSingle("eggsalad-surname", "Smith")
 
 	useEffect(() => setRecordsSorted(records.sort(ReviewSort)), [records])
@@ -66,7 +91,8 @@ function Review() {
 		<>
 			<div className="flex gap-2">
 				<ShareDialog data={recordsSorted} />
-				<Button>Compare</Button>
+				<CompareDialog setData={setCompares} />
+				<a onClick={() => console.log(compares)}>Test</a>
 			</div>
 			<ScrollArea className="h-[400px] w-full">
 				<div className="block sm:hidden">
