@@ -1,5 +1,5 @@
 import { NameRecords, NameStorage } from "@/Types"
-import { NameCompressed } from "@/Types/Names"
+import { NameComparisons, NameCompressed } from "@/Types/Names"
 
 export const pickRandomName = (names: NameRecords[], existing: NameStorage[]): NameRecords | undefined => {
 	const pickName = (names: NameRecords[]) => {
@@ -35,4 +35,23 @@ export const decompressNames = (compressed: string): NameCompressed[] => {
 			Accepted: Boolean(Number(accepted)),
 		}
 	})
+}
+
+export const compareNameChoices = (nameRecords: NameRecords[], nameCompressed: NameCompressed[]): NameComparisons[] => {
+    const nameCompressedMap = new Map<string, boolean>();
+    nameCompressed.forEach(nc => {
+        nameCompressedMap.set(nc.Name, nc.Accepted);
+    });
+
+    const nameComparisons: NameComparisons[] = nameRecords.map(nr => {
+        const otherAccepted = nameCompressedMap.get(nr.Name);
+        return {
+            Name: nr.Name,
+            Gender: nr.Gender,
+            UserAccepted: 'Accepted' in nr ? (nr as NameStorage).Accepted : false,
+            OtherAccepted: otherAccepted !== undefined ? otherAccepted : undefined
+        };
+    });
+
+    return nameComparisons;
 }

@@ -15,6 +15,7 @@ import {
 import { QRCodeSVG } from "qrcode.react"
 import { compressNames, decompressNames } from "@/Utils"
 import QrCodeReader from "react-qrcode-reader"
+import { compareNameChoices } from "@/Utils/NameUtil"
 
 function ShareDialog({ data }: { data: NameStorage[] }) {
 	const names = compressNames(data.map((a) => ({ Name: a.Name, Accepted: a.Accepted })))
@@ -102,7 +103,7 @@ function Review() {
 			<div className="flex justify-center gap-2">
 				<ShareDialog data={recordsSorted} />
 				<CompareDialog setData={setCompares} />
-				<a onClick={() => console.log(compares)}>Test</a>
+				<a onClick={() => console.log(compareNameChoices(recordsSorted, compares))}>Test</a>
 			</div>
 			<ScrollArea className="h-[400px] w-full">
 				<div className="block sm:hidden">
