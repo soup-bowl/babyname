@@ -1,4 +1,5 @@
 import { NameRecords, NameStorage } from "@/Types"
+import { NameCompressed } from "@/Types/Names"
 
 export const pickRandomName = (names: NameRecords[], existing: NameStorage[]): NameRecords | undefined => {
 	const pickName = (names: NameRecords[]) => {
@@ -20,4 +21,19 @@ export const pickRandomName = (names: NameRecords[], existing: NameStorage[]): N
 	} while (checkDupe(name, existing))
 
 	return name
+}
+
+
+export const compressNames = (names: NameCompressed[]):string => {
+	return names.map(d => `${d.Name}:${Number(d.Accepted)}`).join(',')
+}
+
+export const decompressNames = (compressed: string): NameCompressed[] => {
+    return compressed.split(',').map(pair => {
+        const [name, accepted] = pair.split(':');
+        return {
+            Name: name,
+            Accepted: Boolean(Number(accepted))
+        };
+    });
 }

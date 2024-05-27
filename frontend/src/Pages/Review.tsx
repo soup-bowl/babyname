@@ -1,9 +1,39 @@
+import { useEffect, useState } from "react"
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/Components/ui/table"
 import { ScrollArea } from "@/Components/ui/scroll-area"
 import { useLocalStorage, useLocalStorageSingle } from "@/Hooks"
 import { NameStorage } from "@/Types"
 import { Button } from "@/Components/ui/button"
-import { useEffect, useState } from "react"
+import {
+	Dialog,
+	DialogTrigger,
+	DialogContent,
+	DialogTitle,
+	DialogDescription,
+	DialogHeader,
+} from "@/Components/ui/dialog"
+import QrSvg from '@wojtekmaj/react-qr-svg'
+import { compressNames } from "@/Utils"
+
+function ShareDialog({ data }: { data: NameStorage[] }) {
+	const names = compressNames(data.map(a => ({ Name: a.Name, Accepted: a.Accepted })))
+
+	return (
+		<Dialog>
+			<DialogTrigger>
+				<Button>Share</Button>
+			</DialogTrigger>
+			<DialogContent className="max-w-screen-sm">
+				<DialogHeader>
+					<DialogTitle>Share</DialogTitle>
+					<DialogDescription className="flex justify-center">
+						<QrSvg value={names} className="max-w-sm" />
+					</DialogDescription>
+				</DialogHeader>
+			</DialogContent>
+		</Dialog>
+	)
+}
 
 function Review() {
 	const [records, setRecords] = useLocalStorage<NameStorage[]>("eggsalad-choices", [])
@@ -34,6 +64,10 @@ function Review() {
 
 	return (
 		<>
+			<div className="flex gap-2">
+				<ShareDialog data={recordsSorted} />
+				<Button>Compare</Button>
+			</div>
 			<ScrollArea className="h-[400px] w-full">
 				<div className="block sm:hidden">
 					<Table className="text-black">
@@ -58,7 +92,7 @@ function Review() {
 						</TableBody>
 					</Table>
 				</div>
-	
+
 				<div className="hidden sm:block">
 					<Table className="text-black">
 						<TableHeader>

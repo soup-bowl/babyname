@@ -1,1 +1,1 @@
-export type { NameRecords, NameStorage } from "./Names"
+export type { NameRecords, NameStorage, NameCompressed } from "./Names"
