@@ -1,1 +1,1 @@
-export { pickRandomName, compressNames, decompressNames } from "./NameUtil"
+export { pickRandomName, compressNames, decompressNames, compareNameChoices } from "./NameUtil"

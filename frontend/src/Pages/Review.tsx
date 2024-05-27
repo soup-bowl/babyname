@@ -13,9 +13,8 @@ import {
 	DialogHeader,
 } from "@/Components/ui/dialog"
 import { QRCodeSVG } from "qrcode.react"
-import { compressNames, decompressNames } from "@/Utils"
+import { compressNames, decompressNames, compareNameChoices } from "@/Utils"
 import QrCodeReader from "react-qrcode-reader"
-import { compareNameChoices } from "@/Utils/NameUtil"
 
 function ShareDialog({ data }: { data: NameStorage[] }) {
 	const names = compressNames(data.map((a) => ({ Name: a.Name, Accepted: a.Accepted })))
