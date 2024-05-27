@@ -12,7 +12,7 @@ import {
 	DialogDescription,
 	DialogHeader,
 } from "@/Components/ui/dialog"
-import QrSvg from '@wojtekmaj/react-qr-svg'
+import { QRCodeCanvas, QRCodeSVG } from "qrcode.react"
 import { compressNames, decompressNames } from "@/Utils"
 import QrCodeReader from "react-qrcode-reader"
 
@@ -27,8 +27,13 @@ function ShareDialog({ data }: { data: NameStorage[] }) {
 			<DialogContent className="max-w-screen-sm">
 				<DialogHeader>
 					<DialogTitle>Share</DialogTitle>
-					<DialogDescription className="flex justify-center">
-						<QrSvg value={names} className="max-w-sm" />
+					<DialogDescription className="flex flex-column justify-center gap-4">
+						<div>
+							<QRCodeSVG value={names} className="max-w-sm" />
+						</div>
+						<div>
+							<QRCodeCanvas value={names} className="max-w-sm" />
+						</div>
 					</DialogDescription>
 				</DialogHeader>
 			</DialogContent>
@@ -36,7 +41,7 @@ function ShareDialog({ data }: { data: NameStorage[] }) {
 	)
 }
 
-function CompareDialog({setData}: { setData: (value: NameCompressed[]) => void }) {
+function CompareDialog({ setData }: { setData: (value: NameCompressed[]) => void }) {
 	const [dialogState, setDialogState] = useState<boolean>(false)
 
 	return (
