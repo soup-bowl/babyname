@@ -58,7 +58,7 @@ function CompareDialog({ setData }: { setData: (value: NameCompressed[]) => void
 							}}
 							videoConstraints={{
 								facingMode: {
-									exact: "environment"
+									ideal: "environment"
 								}
 							}}
 						/>
