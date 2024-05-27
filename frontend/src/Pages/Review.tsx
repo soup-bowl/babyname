@@ -56,6 +56,11 @@ function CompareDialog({ setData }: { setData: (value: NameCompressed[]) => void
 								setData(decompressNames(scan))
 								setDialogState(false)
 							}}
+							videoConstraints={{
+								facingMode: {
+									exact: "environment"
+								}
+							}}
 						/>
 					</DialogDescription>
 				</DialogHeader>
@@ -94,7 +99,7 @@ function Review() {
 
 	return (
 		<>
-			<div className="flex gap-2">
+			<div className="flex justify-center gap-2">
 				<ShareDialog data={recordsSorted} />
 				<CompareDialog setData={setCompares} />
 				<a onClick={() => console.log(compares)}>Test</a>
