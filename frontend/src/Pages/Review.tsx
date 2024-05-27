@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/Components/ui/table"
 import { ScrollArea } from "@/Components/ui/scroll-area"
 import { useLocalStorage, useLocalStorageSingle } from "@/Hooks"
-import { NameCompressed, NameStorage } from "@/Types"
+import { NameStorage } from "@/Types"
 import { Button } from "@/Components/ui/button"
 import {
 	Dialog,
@@ -13,11 +13,11 @@ import {
 	DialogHeader,
 } from "@/Components/ui/dialog"
 import { QRCodeSVG } from "qrcode.react"
-import { compressNames, decompressNames, compareNameChoices } from "@/Utils"
+import { compareNameChoices, compressNames, decompressNames } from "@/Utils"
 import QrCodeReader from "react-qrcode-reader"
 
 function ShareDialog({ data }: { data: NameStorage[] }) {
-	const names = compressNames(data.map((a) => ({ Name: a.Name, Accepted: a.Accepted })))
+	const names = compressNames(data.map((a) => ({ Name: a.Name, Accepted: a.UserAccepted })))
 
 	return (
 		<Dialog>
@@ -36,7 +36,7 @@ function ShareDialog({ data }: { data: NameStorage[] }) {
 	)
 }
 
-function CompareDialog({ setData }: { setData: (value: NameCompressed[]) => void }) {
+function CompareDialog({ data, setData }: { data: NameStorage[]; setData: (value: NameStorage[]) => void }) {
 	const [dialogState, setDialogState] = useState<boolean>(false)
 
 	return (
@@ -53,7 +53,7 @@ function CompareDialog({ setData }: { setData: (value: NameCompressed[]) => void
 							width={600}
 							height={500}
 							action={(scan) => {
-								setData(decompressNames(scan))
+								setData(compareNameChoices(data, decompressNames(scan)))
 								setDialogState(false)
 							}}
 							videoConstraints={{
@@ -72,7 +72,6 @@ function CompareDialog({ setData }: { setData: (value: NameCompressed[]) => void
 function Review() {
 	const [records, setRecords] = useLocalStorage<NameStorage[]>("eggsalad-choices", [])
 	const [recordsSorted, setRecordsSorted] = useState<NameStorage[]>([])
-	const [compares, setCompares] = useState<NameCompressed[]>([])
 	const [surname] = useLocalStorageSingle("eggsalad-surname", "Smith")
 
 	useEffect(() => setRecordsSorted(records.sort(ReviewSort)), [records])
@@ -85,8 +84,8 @@ function Review() {
 	}
 
 	const ReviewSort = (a: NameStorage, b: NameStorage) => {
-		if (Number(a.Accepted) !== Number(b.Accepted)) {
-			return Number(b.Accepted) - Number(a.Accepted)
+		if (Number(a.UserAccepted) !== Number(b.UserAccepted)) {
+			return Number(b.UserAccepted) - Number(a.UserAccepted)
 		}
 
 		const genderComparison = a.Gender.localeCompare(b.Gender)
@@ -101,15 +100,14 @@ function Review() {
 		<>
 			<div className="flex justify-center gap-2">
 				<ShareDialog data={recordsSorted} />
-				<CompareDialog setData={setCompares} />
-				<a onClick={() => console.log(compareNameChoices(recordsSorted, compares))}>Test</a>
+				<CompareDialog data={recordsSorted} setData={setRecords} />
 			</div>
 			<ScrollArea className="h-[400px] w-full">
 				<div className="block sm:hidden">
 					<Table className="text-black">
 						<TableBody className="text-xl">
 							{recordsSorted.map((name) => {
-								const chosenColour = name.Accepted ? "bg-green-100" : "bg-red-100"
+								const chosenColour = name.UserAccepted ? "bg-green-100" : "bg-red-100"
 
 								return (
 									<TableRow className={chosenColour} key={name.Name}>
@@ -138,12 +136,13 @@ function Review() {
 								<TableHead>Name</TableHead>
 								<TableHead>Gender</TableHead>
 								<TableHead>Decision</TableHead>
+								<TableHead>Theirs</TableHead>
 								<TableHead className="w-[120px]">Actions</TableHead>
 							</TableRow>
 						</TableHeader>
 						<TableBody className="text-xl">
 							{recordsSorted.map((name) => {
-								const chosenColour = name.Accepted ? "bg-green-100" : "bg-red-100"
+								const chosenColour = name.UserAccepted ? "bg-green-100" : "bg-red-100"
 
 								return (
 									<TableRow className={chosenColour} key={name.Name}>
@@ -151,7 +150,10 @@ function Review() {
 											{name.Name}&nbsp;{surname}
 										</TableCell>
 										<TableCell>{name.Gender}</TableCell>
-										<TableCell>{name.Accepted ? <>✔️</> : <>❌</>}</TableCell>
+										<TableCell>{name.UserAccepted ? <>✔️</> : <>❌</>}</TableCell>
+										<TableCell>
+											{name.OtherAccepted !== undefined ? name.OtherAccepted ? <>✔️</> : <>❌</> : <>❓</>}
+										</TableCell>
 										<TableCell>
 											<Button size="sm" onClick={() => RemoveChoice(name)}>
 												Delete
