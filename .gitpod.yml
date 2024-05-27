@@ -1,8 +1,10 @@
 tasks:
   - name: Frontend
     before: |
-      npm install
+      cd frontend
+      npm ci
     command: |
+      cd frontend
       npm start
 
 ports:
