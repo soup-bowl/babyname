@@ -83,9 +83,21 @@ function Selection() {
 		return <h1>Error</h1>
 	}
 
+	const windowColour = (gender: string) => {
+		switch (gender.toLowerCase()) {
+			case "male":
+				return "bg-blue-200"
+			case "female":
+				return "bg-pink-200"
+			default:
+			case "universal":
+				return "bg-yellow-200"
+		}
+	}
+
 	return (
 		<>
-			<Card className="text-center text-2xl p-6 max-w-lg w-full mx-4">
+			<Card className={`text-center text-2xl p-6 max-w-lg w-full mx-4 ${windowColour(name.Gender)}`}>
 				<CardHeader>
 					<CardTitle className="text-4xl">
 						{name.Name}&nbsp;

@@ -28,7 +28,9 @@ function ShareDialog({ data }: { data: NameStorage[] }) {
 				<DialogHeader>
 					<DialogTitle>Share</DialogTitle>
 					<DialogDescription className="flex justify-center">
-						<QRCodeSVG value={names} width="100%" height="400" />
+						<div className="bg-white border-4 border-black p-4">
+							<QRCodeSVG value={names} width="100%" height="400" />
+						</div>
 					</DialogDescription>
 				</DialogHeader>
 			</DialogContent>
@@ -48,20 +50,22 @@ function CompareDialog({ data, setData }: { data: NameStorage[]; setData: (value
 				<DialogHeader>
 					<DialogTitle>Compare</DialogTitle>
 					<DialogDescription className="flex justify-center">
-						<QrCodeReader
-							delay={100}
-							width={600}
-							height={500}
-							action={(scan) => {
-								setData(compareNameChoices(data, decompressNames(scan)))
-								setDialogState(false)
-							}}
-							videoConstraints={{
-								facingMode: {
-									ideal: "environment",
-								},
-							}}
-						/>
+						<div className="bg-white border-4 border-black p-4">
+							<QrCodeReader
+								delay={100}
+								width={600}
+								height={500}
+								action={(scan) => {
+									setData(compareNameChoices(data, decompressNames(scan)))
+									setDialogState(false)
+								}}
+								videoConstraints={{
+									facingMode: {
+										ideal: "environment",
+									},
+								}}
+							/>
+						</div>
 					</DialogDescription>
 				</DialogHeader>
 			</DialogContent>
@@ -113,9 +117,9 @@ function Review() {
 				<ShareDialog data={recordsSorted} />
 				<CompareDialog data={recordsSorted} setData={setRecords} />
 			</div>
-			<ScrollArea className="h-[400px] w-full">
+			<ScrollArea className="h-[400px] w-full border-2 border-black mt-4">
 				<div className="block sm:hidden">
-					<Table className="text-black">
+					<Table className="text-black bg-white">
 						<TableBody className="text-xl">
 							{recordsSorted.map((name) => {
 								const chosenColour = name.UserAccepted ? "bg-green-100" : "bg-red-100"
@@ -141,7 +145,7 @@ function Review() {
 				</div>
 
 				<div className="hidden sm:block">
-					<Table className="text-black">
+					<Table className="text-black bg-white">
 						<TableHeader>
 							<TableRow>
 								<TableHead>Name</TableHead>

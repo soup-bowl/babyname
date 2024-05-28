@@ -71,8 +71,9 @@ module.exports = {
 				"accordion-up": "accordion-up 0.2s ease-out",
 			},
 			boxShadow: {
-				'brutal-drop-sm': '4px 4px 0px rgb(0, 0, 0)',
-				'brutal-drop-md': '8px 8px 0px rgb(0, 0, 0)',
+				"brutal-drop-sm": "2px 2px 0px rgb(0, 0, 0)",
+				"brutal-drop-md": "4px 4px 0px rgb(0, 0, 0)",
+				"brutal-drop-lg": "8px 8px 0px rgb(0, 0, 0)",
 			},
 		},
 	},
