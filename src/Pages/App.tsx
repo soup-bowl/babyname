@@ -14,9 +14,9 @@ function App() {
 
 	return (
 		<DataContext.Provider value={data.data}>
-			<div className="flex flex-col gap-4 items-center justify-center min-h-screen bg-gray-200">
+			<div className="flex flex-col gap-4 items-center justify-center min-h-screen bg-brutal3">
 				<Selection />
-				<p className="text-gray-500">
+				<p className="text-gray-800">
 					made by{" "}
 					<a className="underline" href="https://github.com/soup-bowl">
 						soup-bowl

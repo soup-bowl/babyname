@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-	darkMode: ["class"],
+	darkMode: [],
 	content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
 	prefix: "",
 	theme: {
@@ -16,8 +16,12 @@ module.exports = {
 				border: "hsl(var(--border))",
 				input: "hsl(var(--input))",
 				ring: "hsl(var(--ring))",
-				background: "hsl(var(--background))",
+				background: "hsl(var(--brutal-3))",
 				foreground: "hsl(var(--foreground))",
+				brutal1: "hsl(var(--brutal-1))",
+				brutal2: "hsl(var(--brutal-2))",
+				brutal3: "hsl(var(--brutal-3))",
+				brutal4: "hsl(var(--brutal-4))",
 				primary: {
 					DEFAULT: "hsl(var(--primary))",
 					foreground: "hsl(var(--primary-foreground))",
@@ -65,6 +69,10 @@ module.exports = {
 			animation: {
 				"accordion-down": "accordion-down 0.2s ease-out",
 				"accordion-up": "accordion-up 0.2s ease-out",
+			},
+			boxShadow: {
+				'brutal-drop-sm': '4px 4px 0px rgb(0, 0, 0)',
+				'brutal-drop-md': '8px 8px 0px rgb(0, 0, 0)',
 			},
 		},
 	},
