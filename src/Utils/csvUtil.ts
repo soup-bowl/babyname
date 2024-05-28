@@ -17,7 +17,7 @@ export const parseNameData = (data: string): NameRecords[] => {
 }
 
 export const createNameDataCSV = (data: NameStorage[]): string => {
-	const headers = Object.keys(data[0])
+	const headers = Object.keys(data[0]).filter((header) => header !== "id")
 	const csvRows = data.map((record) =>
 		headers
 			.map((header) => {
