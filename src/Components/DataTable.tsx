@@ -10,13 +10,7 @@ import {
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/Components/ui/table"
 import { Check, CircleOff, X } from "lucide-react"
 
-export const EmojiValue = ({
-	value,
-	className = "",
-}: {
-	value?: boolean
-	className?: string
-}) => (
+export const EmojiValue = ({ value, className = "" }: { value?: boolean; className?: string }) => (
 	<span className={`text-2xl ${className}`}>
 		{value !== undefined ? value ? <Check color="green" /> : <X color="red" /> : <CircleOff />}
 	</span>

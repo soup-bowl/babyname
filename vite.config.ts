@@ -11,8 +11,8 @@ export default defineConfig({
 			registerType: "autoUpdate",
 			includeAssets: ["favicon.ico", "robots.txt", "apple-touch-icon.png"],
 			manifest: {
-				short_name: "eggsalad",
-				name: "Egg Salad",
+				short_name: "Baby Names",
+				name: "baby Name Generator",
 				icons: [
 					{
 						src: "favicon.ico",
@@ -33,7 +33,7 @@ export default defineConfig({
 				start_url: ".",
 				display: "standalone",
 				theme_color: "#000000",
-				background_color: "#ffffff",
+				background_color: "#a8fbff",
 			},
 		}),
 	],
