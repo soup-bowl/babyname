@@ -99,7 +99,7 @@ function Review() {
 	}
 
 	const DownloadData = () =>
-		presentDownload(new Blob([createNameDataCSV(records)], { type: "text/csv;charset=utf-8;" }))
+		presentDownload(new Blob([createNameDataCSV(records, surname)], { type: "text/csv;charset=utf-8;" }))
 
 	return (
 		<>

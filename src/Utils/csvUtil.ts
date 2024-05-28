@@ -16,16 +16,20 @@ export const parseNameData = (data: string): NameRecords[] => {
 	})
 }
 
-export const createNameDataCSV = (data: NameStorage[]): string => {
+export const createNameDataCSV = (data: NameStorage[], surname: string): string => {
 	const headers = Object.keys(data[0]).filter((header) => header !== "id")
-	const csvRows = data.map((record) =>
-		headers
+
+	const csvRows = data.map((record) => {
+		return headers
 			.map((header) => {
-				const value = record[header as keyof NameStorage]
+				let value = record[header as keyof NameStorage]
+				if (header === "Name" && typeof value === "string") {
+					value = `${value} ${surname}`
+				}
 				return typeof value === "string" ? `"${value.replace(/"/g, '""')}"` : value
 			})
 			.join(",")
-	)
+	})
 
 	return [headers.join(","), ...csvRows].join("\n")
 }
