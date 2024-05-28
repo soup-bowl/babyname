@@ -21,7 +21,7 @@ function App() {
 					<a className="underline" href="https://soupbowl.io">
 						soup-bowl
 					</a>
-					&nbsp;•&nbsp;
+					&nbsp;•&nbsp;{APP_VERSION}&nbsp;•&nbsp;
 					<a className="underline" href="mailto:babynames@subo.dev?subject=Baby Name Recommendations">
 						suggest names
 					</a>
