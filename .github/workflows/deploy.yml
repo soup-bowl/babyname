@@ -31,7 +31,7 @@ jobs:
           node-version: 20.x
 
       - name: 🏗 Build Site
-        run: cd frontend && npm ci && npm run build
+        run: npm ci && npm run build
 
       - name: 🚛 Publish Site
         id: cfp
@@ -40,7 +40,7 @@ jobs:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
           projectName: eggsalad
-          directory: ./frontend/dist
+          directory: ./dist
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.event_name == 'release' && 'main' || 'eggdev' }}
 
