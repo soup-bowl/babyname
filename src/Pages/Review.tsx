@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react"
-import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/Components/ui/table"
+import { useContext, useEffect, useState } from "react"
 import { ScrollArea } from "@/Components/ui/scroll-area"
 import { useLocalStorage, useLocalStorageSingle } from "@/Hooks"
 import { NameStorage } from "@/Types"
@@ -13,8 +12,11 @@ import {
 	DialogHeader,
 } from "@/Components/ui/dialog"
 import { QRCodeSVG } from "qrcode.react"
-import { compareNameChoices, compressNames, decompressNames } from "@/Utils"
+import { compareNameChoices, compressNames, createNameDataCSV, decompressNames, presentDownload } from "@/Utils"
 import QrCodeReader from "react-qrcode-reader"
+import { DataTable } from "@/Components/DataTable"
+import { columns, columnsMobile } from "@/Components/DataTable.def"
+import { DataContext } from "@/Pages/App"
 
 function ShareDialog({ data }: { data: NameStorage[] }) {
 	const names = compressNames(data.map((a) => ({ Name: a.Name, Accepted: a.UserAccepted })))
@@ -50,7 +52,7 @@ function CompareDialog({ data, setData }: { data: NameStorage[]; setData: (value
 				<DialogHeader>
 					<DialogTitle>Compare</DialogTitle>
 					<DialogDescription className="flex justify-center">
-						<div className="bg-white border-4 border-black p-4">
+						<div className="bg-white border-4 border-black">
 							<QrCodeReader
 								delay={100}
 								width={600}
@@ -74,6 +76,7 @@ function CompareDialog({ data, setData }: { data: NameStorage[]; setData: (value
 }
 
 function Review() {
+	const data = useContext(DataContext)
 	const [records, setRecords] = useLocalStorage<NameStorage[]>("eggsalad-choices", [])
 	const [recordsSorted, setRecordsSorted] = useState<NameStorage[]>([])
 	const [surname] = useLocalStorageSingle("eggsalad-surname", "Smith")
@@ -86,6 +89,9 @@ function Review() {
 			return updatedRecords
 		})
 	}
+
+	const DownloadData = () =>
+		presentDownload(new Blob([createNameDataCSV(recordsSorted)], { type: "text/csv;charset=utf-8;" }))
 
 	const ReviewSort = (a: NameStorage, b: NameStorage) => {
 		const otherAcceptedPriority = (value: boolean | undefined) => {
@@ -116,69 +122,17 @@ function Review() {
 			<div className="flex justify-center gap-2">
 				<ShareDialog data={recordsSorted} />
 				<CompareDialog data={recordsSorted} setData={setRecords} />
+				<Button onClick={DownloadData}>Download</Button>
 			</div>
-			<ScrollArea className="h-[400px] w-full border-2 border-black mt-4">
+			<p className="text-center text-foreground my-4">
+				Voted on {recordsSorted.length} of {data.length} possible names
+			</p>
+			<ScrollArea className="h-[400px] w-full border-2 border-black mt-4 text-black bg-white">
 				<div className="block sm:hidden">
-					<Table className="text-black bg-white">
-						<TableBody className="text-xl">
-							{recordsSorted.map((name) => {
-								const chosenColour = name.UserAccepted ? "bg-green-100" : "bg-red-100"
-
-								return (
-									<TableRow className={chosenColour} key={name.Name}>
-										<TableCell className="text-left">
-											<p className="font-medium">
-												{name.Name}&nbsp;{surname}
-											</p>
-											<p className="text-sm">{name.Gender}</p>
-										</TableCell>
-										<TableCell>
-											<Button size="icon" onClick={() => RemoveChoice(name)}>
-												X
-											</Button>
-										</TableCell>
-									</TableRow>
-								)
-							})}
-						</TableBody>
-					</Table>
+					<DataTable columns={columnsMobile(RemoveChoice, surname)} data={recordsSorted} />
 				</div>
-
 				<div className="hidden sm:block">
-					<Table className="text-black bg-white">
-						<TableHeader>
-							<TableRow>
-								<TableHead>Name</TableHead>
-								<TableHead>Gender</TableHead>
-								<TableHead>Decision</TableHead>
-								<TableHead>Theirs</TableHead>
-								<TableHead className="w-[120px]">Actions</TableHead>
-							</TableRow>
-						</TableHeader>
-						<TableBody className="text-xl">
-							{recordsSorted.map((name) => {
-								const chosenColour = name.UserAccepted ? "bg-green-100" : "bg-red-100"
-
-								return (
-									<TableRow className={chosenColour} key={name.Name}>
-										<TableCell className="font-medium">
-											{name.Name}&nbsp;{surname}
-										</TableCell>
-										<TableCell>{name.Gender}</TableCell>
-										<TableCell>{name.UserAccepted ? <>✔️</> : <>❌</>}</TableCell>
-										<TableCell>
-											{name.OtherAccepted !== undefined ? name.OtherAccepted ? <>✔️</> : <>❌</> : <>❓</>}
-										</TableCell>
-										<TableCell>
-											<Button size="sm" onClick={() => RemoveChoice(name)}>
-												Delete
-											</Button>
-										</TableCell>
-									</TableRow>
-								)
-							})}
-						</TableBody>
-					</Table>
+					<DataTable columns={columns(RemoveChoice, surname)} data={recordsSorted} />
 				</div>
 			</ScrollArea>
 		</>

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
-import { NameRecords } from "@/Types/Names"
+import { NameRecords } from "@/Types"
+import { parseNameData } from "@/Utils"
 
 const NAME_SOURCE = import.meta.env.VITE_NAME_SOURCE
 
@@ -8,22 +9,6 @@ const fetchData = async (): Promise<string> => {
 	const data = await response.text()
 
 	return data
-}
-
-const parseData = (data: string): NameRecords[] => {
-	const lines = data
-		.split("\n")
-		.map((line) => line.trim())
-		.filter((line) => line.length > 0)
-	const headers = lines[0].split(",")
-
-	return lines.slice(1).map((line) => {
-		const values = line.split(",")
-		return headers.reduce((obj, header, index) => {
-			obj[header as keyof NameRecords] = values[index]
-			return obj
-		}, {} as NameRecords)
-	})
 }
 
 const useNameData = () => {
@@ -36,7 +21,7 @@ const useNameData = () => {
 			try {
 				setLoading(true)
 				const csvData = await fetchData()
-				const parsedData = parseData(csvData)
+				const parsedData = parseNameData(csvData)
 				setData(parsedData)
 			} catch (err) {
 				setError(err as Error)

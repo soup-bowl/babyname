@@ -18,14 +18,13 @@ function App() {
 				<Selection />
 				<p className="text-gray-800">
 					made by{" "}
-					<a className="underline" href="https://github.com/soup-bowl">
+					<a className="underline" href="https://soupbowl.io">
 						soup-bowl
 					</a>
 					&nbsp;•&nbsp;
 					<a className="underline" href="mailto:babynames@subo.dev?subject=Baby Name Recommendations">
 						suggest names
 					</a>
-					?
 				</p>
 			</div>
 		</DataContext.Provider>

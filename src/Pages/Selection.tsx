@@ -46,7 +46,7 @@ function SurnameDialog() {
 				<DialogHeader>
 					<DialogTitle>Change Surname</DialogTitle>
 					<DialogDescription>
-						<Input value={name} onChange={(e) => setName(e.target.value)} />
+						<Input className="mt-4" value={name} onChange={(e) => setName(e.target.value)} />
 					</DialogDescription>
 				</DialogHeader>
 			</DialogContent>
@@ -107,11 +107,11 @@ function Selection() {
 				</CardHeader>
 				<CardContent>{name.Meaning}</CardContent>
 				<CardFooter className="flex justify-between gap-4">
-					<Button size="lg" onClick={() => submitNameChoice(false)}>
+					<Button size="lg" className="bg-red-400 hover:bg-red-200" onClick={() => submitNameChoice(false)}>
 						No
 					</Button>
 					<ReviewDialog />
-					<Button size="lg" onClick={() => submitNameChoice(true)}>
+					<Button size="lg" className="bg-green-400" onClick={() => submitNameChoice(true)}>
 						Yes
 					</Button>
 				</CardFooter>
