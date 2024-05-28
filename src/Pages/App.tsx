@@ -24,7 +24,8 @@ function App() {
 					&nbsp;•&nbsp;
 					<a className="underline" href="mailto:babynames@subo.dev?subject=Baby Name Recommendations">
 						suggest names
-					</a>?
+					</a>
+					?
 				</p>
 			</div>
 		</DataContext.Provider>

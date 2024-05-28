@@ -1,6 +1,6 @@
 export interface NameRecords {
 	Name: string
-	Gender: string
+	Gender: "Male" | "Female" | "Universal"
 	Meaning: string
 }
 
