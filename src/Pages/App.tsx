@@ -21,6 +21,10 @@ function App() {
 					<a className="underline" href="https://github.com/soup-bowl">
 						soup-bowl
 					</a>
+					&nbsp;•&nbsp;
+					<a className="underline" href="mailto:babynames@subo.dev?subject=Baby Name Recommendations">
+						suggest names
+					</a>?
 				</p>
 			</div>
 		</DataContext.Provider>
