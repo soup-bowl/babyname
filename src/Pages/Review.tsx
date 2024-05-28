@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 import { ScrollArea } from "@/Components/ui/scroll-area"
-import { useLocalStorage, useLocalStorageSingle } from "@/Hooks"
+import { useLocalStorageSingle } from "@/Hooks"
 import { NameStorage } from "@/Types"
 import { Button } from "@/Components/ui/button"
 import {
@@ -12,7 +12,15 @@ import {
 	DialogHeader,
 } from "@/Components/ui/dialog"
 import { QRCodeSVG } from "qrcode.react"
-import { compareNameChoices, compressNames, createNameDataCSV, decompressNames, presentDownload } from "@/Utils"
+import {
+	RemoveChoice as RemoveFromDB,
+	compareNameChoices,
+	compressNames,
+	createNameDataCSV,
+	decompressNames,
+	getAlreadySeenNames,
+	presentDownload,
+} from "@/Utils"
 import QrCodeReader from "react-qrcode-reader"
 import { DataTable } from "@/Components/DataTable"
 import { columns, columnsMobile } from "@/Components/DataTable.def"
@@ -77,62 +85,38 @@ function CompareDialog({ data, setData }: { data: NameStorage[]; setData: (value
 
 function Review() {
 	const data = useContext(DataContext)
-	const [records, setRecords] = useLocalStorage<NameStorage[]>("eggsalad-choices", [])
-	const [recordsSorted, setRecordsSorted] = useState<NameStorage[]>([])
+	const [records, setRecords] = useState<NameStorage[]>([])
 	const [surname] = useLocalStorageSingle("eggsalad-surname", "Smith")
 
-	useEffect(() => setRecordsSorted(records.sort(ReviewSort)), [records])
+	useEffect(() => {
+		const loadInitialData = async () => setRecords(await getAlreadySeenNames())
+		loadInitialData()
+	}, [])
 
-	const RemoveChoice = (name: NameStorage) => {
-		setRecords((names) => {
-			const updatedRecords = names.filter((r) => r !== name)
-			return updatedRecords
-		})
+	const RemoveChoice = async (choice: NameStorage): Promise<void> => {
+		await RemoveFromDB(choice)
+		setRecords(await getAlreadySeenNames())
 	}
 
 	const DownloadData = () =>
-		presentDownload(new Blob([createNameDataCSV(recordsSorted)], { type: "text/csv;charset=utf-8;" }))
-
-	const ReviewSort = (a: NameStorage, b: NameStorage) => {
-		const otherAcceptedPriority = (value: boolean | undefined) => {
-			if (value === true) return 2
-			if (value === false) return 1
-			return 0
-		}
-
-		if (Number(a.UserAccepted) !== Number(b.UserAccepted)) {
-			return Number(b.UserAccepted) - Number(a.UserAccepted)
-		}
-
-		const otherAcceptedComparison = otherAcceptedPriority(b.OtherAccepted) - otherAcceptedPriority(a.OtherAccepted)
-		if (otherAcceptedComparison !== 0) {
-			return otherAcceptedComparison
-		}
-
-		const genderComparison = a.Gender.localeCompare(b.Gender)
-		if (genderComparison !== 0) {
-			return genderComparison
-		}
-
-		return a.Name.localeCompare(b.Name)
-	}
+		presentDownload(new Blob([createNameDataCSV(records)], { type: "text/csv;charset=utf-8;" }))
 
 	return (
 		<>
 			<div className="flex justify-center gap-2">
-				<ShareDialog data={recordsSorted} />
-				<CompareDialog data={recordsSorted} setData={setRecords} />
+				<ShareDialog data={records} />
+				<CompareDialog data={records} setData={setRecords} />
 				<Button onClick={DownloadData}>Download</Button>
 			</div>
 			<p className="text-center text-foreground my-4">
-				Voted on {recordsSorted.length} of {data.length} possible names
+				Voted on {records.length} of {data.length} possible names
 			</p>
 			<ScrollArea className="h-[400px] w-full border-2 border-black mt-4 text-black bg-white">
 				<div className="block sm:hidden">
-					<DataTable columns={columnsMobile(RemoveChoice, surname)} data={recordsSorted} />
+					<DataTable columns={columnsMobile(RemoveChoice, surname)} data={records} />
 				</div>
 				<div className="hidden sm:block">
-					<DataTable columns={columns(RemoveChoice, surname)} data={recordsSorted} />
+					<DataTable columns={columns(RemoveChoice, surname)} data={records} />
 				</div>
 			</ScrollArea>
 		</>

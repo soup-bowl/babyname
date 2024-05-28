@@ -1,7 +1,7 @@
-import { useLocalStorage, useLocalStorageSingle } from "@/Hooks"
+import { useLocalStorageSingle } from "@/Hooks"
 import { NameRecords, NameStorage } from "@/Types"
-import { pickRandomName } from "@/Utils"
-import { useContext, useState } from "react"
+import { AddChoice, getAlreadySeenNames, pickRandomName } from "@/Utils"
+import { useContext, useEffect, useState } from "react"
 import { DataContext } from "@/Pages/App"
 import Review from "@/Pages/Review"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/Components/ui/card"
@@ -56,27 +56,20 @@ function SurnameDialog() {
 
 function Selection() {
 	const data = useContext(DataContext)
-	const [records, setRecords] = useLocalStorage<NameStorage[]>("eggsalad-choices", [])
+	const [records, setRecords] = useState<NameStorage[]>([])
 	const [name, setName] = useState<NameRecords | undefined>(pickRandomName(data, records))
 
-	const submitNameChoice = (decision: boolean) => {
-		if (name !== undefined) {
-			setRecords((prevRecords) => {
-				const updatedRecords = [
-					...prevRecords,
-					{
-						Name: name.Name,
-						Gender: name.Gender,
-						Meaning: name.Meaning,
-						UserAccepted: decision,
-					},
-				]
-				console.log(updatedRecords)
-				return updatedRecords
-			})
-		}
+	useEffect(() => {
+		const loadInitialData = async () => setRecords(await getAlreadySeenNames())
+		loadInitialData()
+	}, [])
 
-		setName(pickRandomName(data, records))
+	const submitNameChoice = async (decision: boolean): Promise<void> => {
+		if (name !== undefined) {
+			await AddChoice(name, decision)
+			setRecords(await getAlreadySeenNames())
+			setName(pickRandomName(data, records))
+		}
 	}
 
 	if (name === undefined) {

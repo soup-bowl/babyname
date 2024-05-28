@@ -5,6 +5,7 @@ export interface NameRecords {
 }
 
 export interface NameStorage extends NameRecords {
+	id?: number
 	UserAccepted: boolean
 	OtherAccepted?: boolean
 }

@@ -1,4 +1,5 @@
 export { parseNameData, createNameDataCSV } from "./csvUtil"
+export { AddChoice, RemoveChoice, getAlreadySeenNames } from "./NameStorageUtil"
 export { pickRandomName, compressNames, decompressNames, compareNameChoices } from "./NameUtil"
 
 export const presentDownload = (data: Blob): void => {
