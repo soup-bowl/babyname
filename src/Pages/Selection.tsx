@@ -20,7 +20,7 @@ function ReviewDialog() {
 	return (
 		<Dialog>
 			<DialogTrigger>
-				<Button size="lg">Review</Button>
+				<Button>Review</Button>
 			</DialogTrigger>
 			<DialogContent className="max-w-screen-md">
 				<DialogHeader>
@@ -104,6 +104,7 @@ function Selection() {
 						No
 					</Button>
 					<ReviewDialog />
+					<Button onClick={() => setName(pickRandomName(data, records))}>Skip</Button>
 					<Button size="lg" className="bg-green-400" onClick={() => submitNameChoice(true)}>
 						Yes
 					</Button>
