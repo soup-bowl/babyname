@@ -27,7 +27,7 @@ import { columns, columnsMobile } from "@/Components/DataTable.def"
 import { DataContext } from "@/Pages/App"
 
 function ShareDialog({ data }: { data: NameStorage[] }) {
-	const names = compressNames(data.map((a) => ({ Name: a.Name, Accepted: a.UserAccepted })))
+	const names = compressNames(data.map((a) => ({ id: a.id ?? "", Accepted: a.UserAccepted })))
 
 	return (
 		<Dialog>
@@ -49,6 +49,7 @@ function ShareDialog({ data }: { data: NameStorage[] }) {
 }
 
 function CompareDialog({ data, setData }: { data: NameStorage[]; setData: (value: NameStorage[]) => void }) {
+	const nameData = useContext(DataContext)
 	const [dialogState, setDialogState] = useState<boolean>(false)
 
 	return (
@@ -66,7 +67,7 @@ function CompareDialog({ data, setData }: { data: NameStorage[]; setData: (value
 								width={600}
 								height={500}
 								action={(scan) => {
-									setData(compareNameChoices(data, decompressNames(scan)))
+									setData(compareNameChoices(data, decompressNames(scan, nameData)))
 									setDialogState(false)
 								}}
 								videoConstraints={{

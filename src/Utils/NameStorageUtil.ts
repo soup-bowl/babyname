@@ -11,7 +11,6 @@ export const AddChoice = async (name: NameRecords, decision: boolean): Promise<v
 				UserAccepted: decision,
 			})
 
-			console.log(`Choice saved = ID ${id}`)
 			return id
 		} catch (error) {
 			console.error(`Failed to add ${name}: ${error}`)
