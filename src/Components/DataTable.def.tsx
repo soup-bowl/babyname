@@ -89,14 +89,16 @@ export const columnsMobile = (handleRowAction: HandleRowAction, surname: string)
 		accessorKey: "UserAccepted",
 		header: "Decision",
 		cell: ({ row }) => (
-			<>
-				<p>
-					Yours: <EmojiValue value={row.original.UserAccepted} />
-				</p>
-				<p>
-					Theirs: <EmojiValue value={row.original.OtherAccepted} />
-				</p>
-			</>
+			<div className="flex flex-row gap-2">
+				<div>
+					<span className="underline">Yours</span>
+					<EmojiValue className="flex justify-center" value={row.original.UserAccepted} />
+				</div>
+				<div>
+					<span className="underline">Theirs</span>
+					<EmojiValue className="flex justify-center" value={row.original.OtherAccepted} />
+				</div>
+			</div>
 		),
 	},
 	{
