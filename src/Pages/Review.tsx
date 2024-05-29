@@ -22,6 +22,7 @@ import {
 	presentDownload,
 } from "@/Utils"
 import QrCodeReader from "react-qrcode-reader"
+import { TriangleAlert } from "lucide-react"
 import { DataTable } from "@/Components/DataTable"
 import { columns, columnsMobile } from "@/Components/DataTable.def"
 import { DataContext } from "@/Pages/App"
@@ -37,8 +38,12 @@ function ShareDialog({ data }: { data: NameStorage[] }) {
 			<DialogContent className="max-w-screen-sm">
 				<DialogHeader>
 					<DialogTitle>Share</DialogTitle>
-					<DialogDescription className="flex justify-center">
-						<div className="bg-white border-4 border-black p-4">
+					<DialogDescription className="">
+						<p className="bg-yellow-300 text-black border-2 border-black shadow-brutal-drop-md p-4 my-4">
+							<TriangleAlert className="inline mr-2" />
+							The more choices you make, the smaller and harder-to-read this becomes
+						</p>
+						<div className="flex justify-center bg-white border-4 border-black p-4">
 							<QRCodeSVG value={names} width="100%" height="400" />
 						</div>
 					</DialogDescription>
