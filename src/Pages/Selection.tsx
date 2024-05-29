@@ -103,13 +103,17 @@ function Selection() {
 					<Button size="lg" className="bg-red-400 hover:bg-red-200" onClick={() => submitNameChoice(false)}>
 						No
 					</Button>
-					<ReviewDialog />
-					<Button onClick={() => setName(pickRandomName(data, records))}>Skip</Button>
+					<Button size="lg" onClick={() => setName(pickRandomName(data, records))}>
+						Skip
+					</Button>
 					<Button size="lg" className="bg-green-400" onClick={() => submitNameChoice(true)}>
 						Yes
 					</Button>
 				</CardFooter>
 			</Card>
+			<div className="flex justify-center gap-4">
+				<ReviewDialog />
+			</div>
 		</>
 	)
 }
