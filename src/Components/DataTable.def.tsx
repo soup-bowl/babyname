@@ -72,16 +72,14 @@ export const columns = (handleRowAction: HandleRowAction, surname: string): Colu
 	},
 ]
 
-export const columnsMobile = (handleRowAction: HandleRowAction, surname: string): ColumnDef<NameStorage>[] => [
+export const columnsMobile = (handleRowAction: HandleRowAction): ColumnDef<NameStorage>[] => [
 	{
 		accessorKey: "Name",
 		header: "Name",
 		cell: ({ row }) => (
 			<div className="text-left">
-				<p className="text-lg">
-					{row.original.Name}&nbsp;{surname}
-				</p>
-				<p className="text-sm">{row.original.Gender}</p>
+				<p className="">{row.original.Name}</p>
+				<p className="text-xs">{row.original.Gender}</p>
 			</div>
 		),
 	},

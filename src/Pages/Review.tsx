@@ -119,7 +119,7 @@ function Review() {
 			</p>
 			<ScrollArea className="h-[400px] w-full border-2 border-black mt-4 text-black bg-white">
 				<div className="block sm:hidden">
-					<DataTable columns={columnsMobile(RemoveChoice, surname)} data={records} />
+					<DataTable columns={columnsMobile(RemoveChoice)} data={records} />
 				</div>
 				<div className="hidden sm:block">
 					<DataTable columns={columns(RemoveChoice, surname)} data={records} />

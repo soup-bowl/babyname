@@ -40,7 +40,7 @@ function SurnameDialog() {
 	return (
 		<Dialog>
 			<DialogTrigger>
-				<span className="hover:underline">{name}</span>
+				<span className="hover:underline">{name !== "" ? name : "_"}</span>
 			</DialogTrigger>
 			<DialogContent>
 				<DialogHeader>
