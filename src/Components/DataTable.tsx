@@ -22,7 +22,11 @@ interface DataTableProps<TData, TValue> {
 }
 
 export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
-	const [sorting, setSorting] = useState<SortingState>([])
+	const [sorting, setSorting] = useState<SortingState>([
+		{ id: "UserAccepted", desc: true },
+		{ id: "OtherAccepted", desc: true },
+		{ id: "Name", desc: false },
+	])
 
 	const table = useReactTable({
 		data,
