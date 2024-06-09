@@ -34,7 +34,7 @@ function ShareDialog({ data, setData }: { data: NameStorage[]; setData: (value: 
 	const [dialogState, setDialogState] = useState<boolean>(false)
 
 	return (
-		<Dialog>
+		<Dialog open={dialogState} onOpenChange={setDialogState}>
 			<DialogTrigger>
 				<Button>Share</Button>
 			</DialogTrigger>
