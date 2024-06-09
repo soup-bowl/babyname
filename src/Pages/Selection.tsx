@@ -41,9 +41,10 @@ function ReviewDialog() {
 
 function SurnameDialog() {
 	const [name, setName] = useLocalStorageSingle("eggsalad-surname", "Smith")
+	const [dialogState, setDialogState] = useState<boolean>(false)
 
 	return (
-		<Dialog>
+		<Dialog open={dialogState} onOpenChange={setDialogState}>
 			<DialogTrigger>
 				<span className="hover:underline">{name !== "" ? name : "_"}</span>
 			</DialogTrigger>
@@ -51,7 +52,12 @@ function SurnameDialog() {
 				<DialogHeader>
 					<DialogTitle>Change Surname</DialogTitle>
 					<DialogDescription>
-						<Input className="mt-4" value={name} onChange={(e) => setName(e.target.value)} />
+						<Input
+							className="mt-4"
+							value={name}
+							onChange={(e) => setName(e.target.value)}
+							onKeyDown={(e) => e.key === "Enter" && setDialogState(false)}
+						/>
 					</DialogDescription>
 				</DialogHeader>
 			</DialogContent>
