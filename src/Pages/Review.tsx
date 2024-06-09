@@ -1,16 +1,20 @@
 import { useContext, useEffect, useState } from "react"
-import { ScrollArea } from "@/Components/ui/scroll-area"
 import { useLocalStorageSingle } from "@/Hooks"
 import { NameStorage } from "@/Types"
-import { Button } from "@/Components/ui/button"
 import {
 	Dialog,
 	DialogTrigger,
 	DialogContent,
-	DialogTitle,
-	DialogDescription,
-	DialogHeader,
-} from "@/Components/ui/dialog"
+	Tabs,
+	DataTable,
+	TabsContent,
+	TabsList,
+	TabsTrigger,
+	columns,
+	columnsMobile,
+	ScrollArea,
+	Button,
+} from "@/Components"
 import { QRCodeSVG } from "qrcode.react"
 import {
 	RemoveChoice as RemoveFromDB,
@@ -23,10 +27,7 @@ import {
 } from "@/Utils"
 import QrCodeReader from "react-qrcode-reader"
 import { TriangleAlert } from "lucide-react"
-import { DataTable } from "@/Components/DataTable"
-import { columns, columnsMobile } from "@/Components/DataTable.def"
 import { DataContext } from "@/Pages/App"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/ui/tabs"
 
 function ShareDialog({ data, setData }: { data: NameStorage[]; setData: (value: NameStorage[]) => void }) {
 	const names = compressNames(data.map((a) => ({ id: a.id ?? "", Accepted: a.UserAccepted })))

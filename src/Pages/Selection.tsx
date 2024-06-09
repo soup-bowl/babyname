@@ -4,7 +4,6 @@ import { AddChoice, getAlreadySeenNames, pickRandomName } from "@/Utils"
 import { useContext, useEffect, useState } from "react"
 import { DataContext } from "@/Pages/App"
 import Review from "@/Pages/Review"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/Components/ui/card"
 import {
 	Dialog,
 	DialogTrigger,
@@ -12,9 +11,15 @@ import {
 	DialogTitle,
 	DialogDescription,
 	DialogHeader,
-} from "@/Components/ui/dialog"
-import { Button } from "@/Components/ui/button"
-import { Input } from "@/Components/ui/input"
+	Card,
+	CardHeader,
+	CardTitle,
+	CardContent,
+	CardDescription,
+	CardFooter,
+	Button,
+	Input,
+} from "@/Components"
 
 function ReviewDialog() {
 	return (
