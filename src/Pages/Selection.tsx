@@ -3,7 +3,6 @@ import { NameRecords, NameStorage } from "@/Types"
 import { AddChoice, getAlreadySeenNames, pickRandomName } from "@/Utils"
 import { useContext, useEffect, useState } from "react"
 import { DataContext } from "@/Pages/App"
-import Review from "@/Pages/Review"
 import {
 	Dialog,
 	DialogTrigger,
@@ -20,24 +19,6 @@ import {
 	Button,
 	Input,
 } from "@/Components"
-
-function ReviewDialog() {
-	return (
-		<Dialog>
-			<DialogTrigger>
-				<Button>Review</Button>
-			</DialogTrigger>
-			<DialogContent className="max-w-screen-md">
-				<DialogHeader>
-					<DialogTitle>Review so far</DialogTitle>
-					<DialogDescription>
-						<Review />
-					</DialogDescription>
-				</DialogHeader>
-			</DialogContent>
-		</Dialog>
-	)
-}
 
 function SurnameDialog() {
 	const [name, setName] = useLocalStorageSingle("eggsalad-surname", "Smith")
@@ -122,9 +103,6 @@ function Selection() {
 					</Button>
 				</CardFooter>
 			</Card>
-			<div className="flex justify-center gap-4">
-				<ReviewDialog />
-			</div>
 		</>
 	)
 }

@@ -80,7 +80,11 @@ function ShareDialog({ data, setData }: { data: NameStorage[]; setData: (value: 
 	)
 }
 
-function Review() {
+export interface ReviewProps {
+	updateNameChoices: (mustReload?: boolean) => Promise<void>
+}
+
+function Review({ updateNameChoices }: ReviewProps) {
 	const data = useContext(DataContext)
 	const [records, setRecords] = useState<NameStorage[]>([])
 	const [surname] = useLocalStorageSingle("eggsalad-surname", "Smith")
@@ -106,6 +110,9 @@ function Review() {
 			</div>
 			<p className="text-center text-foreground my-4">
 				Voted on {records.length} of {data.length} possible names
+				<Button size="sm" onClick={() => updateNameChoices(true)}>
+					Update
+				</Button>
 			</p>
 			<ScrollArea className="h-[400px] w-full border-2 border-black mt-4 text-black bg-white">
 				<div className="block sm:hidden">
