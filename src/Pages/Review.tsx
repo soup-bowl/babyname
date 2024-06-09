@@ -110,7 +110,7 @@ function Review({ updateNameChoices }: ReviewProps) {
 			</div>
 			<p className="text-center text-foreground my-4">
 				Voted on {records.length} of {data.length} possible names
-				<Button size="sm" onClick={() => updateNameChoices(true)}>
+				<Button size="xs" className="mx-2" onClick={() => updateNameChoices(true)}>
 					Update
 				</Button>
 			</p>
