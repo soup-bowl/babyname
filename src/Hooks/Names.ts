@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react"
 import { NameRecords } from "@/Types"
 import { parseNameData } from "@/Utils"
+import { useToast } from "@/Components"
 
 const NAME_SOURCE = import.meta.env.VITE_NAME_SOURCE
 const CACHE_KEY = "eggsalad-namecache"
@@ -16,6 +17,7 @@ const useNameData = () => {
 	const [data, setData] = useState<NameRecords[]>([])
 	const [error, setError] = useState<Error | null>(null)
 	const [loading, setLoading] = useState<boolean>(true)
+	const { toast } = useToast()
 
 	const loadData = useCallback(async (mustReload = false) => {
 		let cachedData: string | null = null
@@ -32,6 +34,7 @@ const useNameData = () => {
 				const csvData = await fetchData()
 				const parsedData = parseNameData(csvData)
 				setData(parsedData)
+				toast({ title: "Name list updated" })
 
 				localStorage.setItem(CACHE_KEY, JSON.stringify(parsedData))
 			}

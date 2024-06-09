@@ -14,6 +14,7 @@ import {
 	columnsMobile,
 	ScrollArea,
 	Button,
+	useToast,
 } from "@/Components"
 import { QRCodeSVG } from "qrcode.react"
 import {
@@ -30,6 +31,7 @@ import { TriangleAlert } from "lucide-react"
 import { DataContext } from "@/Pages/App"
 
 function ShareDialog({ data, setData }: { data: NameStorage[]; setData: (value: NameStorage[]) => void }) {
+	const { toast } = useToast()
 	const names = compressNames(data.map((a) => ({ id: a.id ?? "", Accepted: a.UserAccepted })))
 	const nameData = useContext(DataContext)
 	const [dialogState, setDialogState] = useState<boolean>(false)
@@ -63,6 +65,7 @@ function ShareDialog({ data, setData }: { data: NameStorage[]; setData: (value: 
 									height={500}
 									action={(scan) => {
 										setData(compareNameChoices(data, decompressNames(scan, nameData)))
+										toast({ title: "Their choices loaded in" })
 										setDialogState(false)
 									}}
 									videoConstraints={{

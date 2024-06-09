@@ -11,6 +11,7 @@ import {
 	DialogDescription,
 	DialogHeader,
 	Button,
+	Toaster,
 } from "@/Components"
 import Review, { ReviewProps } from "./Review"
 
@@ -63,6 +64,7 @@ function App() {
 					</a>
 				</p>
 			</div>
+			<Toaster />
 		</DataContext.Provider>
 	)
 }
