@@ -26,9 +26,12 @@ import { TriangleAlert } from "lucide-react"
 import { DataTable } from "@/Components/DataTable"
 import { columns, columnsMobile } from "@/Components/DataTable.def"
 import { DataContext } from "@/Pages/App"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/ui/tabs"
 
-function ShareDialog({ data }: { data: NameStorage[] }) {
+function ShareDialog({ data, setData }: { data: NameStorage[]; setData: (value: NameStorage[]) => void }) {
 	const names = compressNames(data.map((a) => ({ id: a.id ?? "", Accepted: a.UserAccepted })))
+	const nameData = useContext(DataContext)
+	const [dialogState, setDialogState] = useState<boolean>(false)
 
 	return (
 		<Dialog>
@@ -36,9 +39,12 @@ function ShareDialog({ data }: { data: NameStorage[] }) {
 				<Button>Share</Button>
 			</DialogTrigger>
 			<DialogContent className="max-w-screen-sm">
-				<DialogHeader>
-					<DialogTitle>Share</DialogTitle>
-					<DialogDescription className="">
+				<Tabs defaultValue="share" className="">
+					<TabsList>
+						<TabsTrigger value="share">Share</TabsTrigger>
+						<TabsTrigger value="compare">Compare</TabsTrigger>
+					</TabsList>
+					<TabsContent value="share">
 						<p className="bg-yellow-300 text-black border-2 border-black shadow-brutal-drop-md p-4 my-4">
 							<TriangleAlert className="inline mr-2" />
 							The more choices you make, the smaller and harder-to-read this becomes
@@ -46,44 +52,28 @@ function ShareDialog({ data }: { data: NameStorage[] }) {
 						<div className="flex justify-center bg-white border-4 border-black p-4">
 							<QRCodeSVG value={names} width="100%" height="400" />
 						</div>
-					</DialogDescription>
-				</DialogHeader>
-			</DialogContent>
-		</Dialog>
-	)
-}
-
-function CompareDialog({ data, setData }: { data: NameStorage[]; setData: (value: NameStorage[]) => void }) {
-	const nameData = useContext(DataContext)
-	const [dialogState, setDialogState] = useState<boolean>(false)
-
-	return (
-		<Dialog open={dialogState} onOpenChange={setDialogState}>
-			<DialogTrigger>
-				<Button>Compare</Button>
-			</DialogTrigger>
-			<DialogContent className="max-w-screen-sm">
-				<DialogHeader>
-					<DialogTitle>Compare</DialogTitle>
-					<DialogDescription className="flex justify-center">
-						<div className="bg-white border-4 border-black">
-							<QrCodeReader
-								delay={100}
-								width={600}
-								height={500}
-								action={(scan) => {
-									setData(compareNameChoices(data, decompressNames(scan, nameData)))
-									setDialogState(false)
-								}}
-								videoConstraints={{
-									facingMode: {
-										ideal: "environment",
-									},
-								}}
-							/>
+					</TabsContent>
+					<TabsContent value="compare">
+						<div className="flex justify-center">
+							<div className="bg-white border-4 border-black">
+								<QrCodeReader
+									delay={100}
+									width={600}
+									height={500}
+									action={(scan) => {
+										setData(compareNameChoices(data, decompressNames(scan, nameData)))
+										setDialogState(false)
+									}}
+									videoConstraints={{
+										facingMode: {
+											ideal: "environment",
+										},
+									}}
+								/>
+							</div>
 						</div>
-					</DialogDescription>
-				</DialogHeader>
+					</TabsContent>
+				</Tabs>
 			</DialogContent>
 		</Dialog>
 	)
@@ -110,8 +100,7 @@ function Review() {
 	return (
 		<>
 			<div className="flex justify-center gap-2">
-				<ShareDialog data={records} />
-				<CompareDialog data={records} setData={setRecords} />
+				<ShareDialog data={records} setData={setRecords} />
 				<Button onClick={DownloadData}>Download</Button>
 			</div>
 			<p className="text-center text-foreground my-4">
