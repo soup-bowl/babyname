@@ -15,6 +15,9 @@ import {
 	ScrollArea,
 	Button,
 	useToast,
+	DialogHeader,
+	DialogTitle,
+	Input,
 } from "@/Components"
 import { QRCodeSVG } from "qrcode.react"
 import {
@@ -27,7 +30,6 @@ import {
 	presentDownload,
 } from "@/Utils"
 import QrCodeReader from "react-qrcode-reader"
-import { TriangleAlert } from "lucide-react"
 import { DataContext } from "@/Pages/App"
 
 function ShareDialog({ data, setData }: { data: NameStorage[]; setData: (value: NameStorage[]) => void }) {
@@ -35,6 +37,21 @@ function ShareDialog({ data, setData }: { data: NameStorage[]; setData: (value: 
 	const names = compressNames(data.map((a) => ({ id: a.id ?? "", Accepted: a.UserAccepted })))
 	const nameData = useContext(DataContext)
 	const [dialogState, setDialogState] = useState<boolean>(false)
+	const [manualVal, setManualVal] = useState<string>("")
+
+	const copyTextToClipboard = async (value: string) => {
+		try {
+			await navigator.clipboard.writeText(value)
+		} catch (err) {
+			console.error("Failed to copy text: ", err)
+		}
+	}
+
+	const convertValues = (string: string) => {
+		setData(compareNameChoices(data, decompressNames(string, nameData)))
+		toast({ title: "Their choices loaded in" })
+		setDialogState(false)
+	}
 
 	return (
 		<Dialog open={dialogState} onOpenChange={setDialogState}>
@@ -48,12 +65,11 @@ function ShareDialog({ data, setData }: { data: NameStorage[]; setData: (value: 
 						<TabsTrigger value="compare">Compare</TabsTrigger>
 					</TabsList>
 					<TabsContent value="share">
-						<p className="bg-yellow-300 text-black border-2 border-black shadow-brutal-drop-md p-4 my-4">
-							<TriangleAlert className="inline mr-2" />
-							The more choices you make, the smaller and harder-to-read this becomes
-						</p>
 						<div className="flex justify-center bg-white border-4 border-black p-4">
 							<QRCodeSVG value={names} width="100%" height="400" />
+						</div>
+						<div className="flex justify-center my-2">
+							<Button onClick={() => copyTextToClipboard(names)}>Manual Copy</Button>
 						</div>
 					</TabsContent>
 					<TabsContent value="compare">
@@ -63,11 +79,7 @@ function ShareDialog({ data, setData }: { data: NameStorage[]; setData: (value: 
 									delay={100}
 									width={600}
 									height={500}
-									action={(scan) => {
-										setData(compareNameChoices(data, decompressNames(scan, nameData)))
-										toast({ title: "Their choices loaded in" })
-										setDialogState(false)
-									}}
+									action={(scan) => convertValues(scan)}
 									videoConstraints={{
 										facingMode: {
 											ideal: "environment",
@@ -75,6 +87,20 @@ function ShareDialog({ data, setData }: { data: NameStorage[]; setData: (value: 
 									}}
 								/>
 							</div>
+						</div>
+						<div className="flex justify-center my-2">
+							<Dialog>
+								<DialogTrigger>
+									<Button>Manual Import</Button>
+								</DialogTrigger>
+								<DialogContent>
+									<DialogHeader>
+										<DialogTitle>Manual Import</DialogTitle>
+									</DialogHeader>
+									<Input className="mt-4" value={manualVal} onChange={(e) => setManualVal(e.target.value)} />
+									<Button onClick={() => convertValues(manualVal)}>Submit</Button>
+								</DialogContent>
+							</Dialog>
 						</div>
 					</TabsContent>
 				</Tabs>
