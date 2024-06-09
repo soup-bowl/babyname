@@ -27,8 +27,8 @@ function App() {
 						soup-bowl
 					</a>
 					&nbsp;•&nbsp;{APP_VERSION}&nbsp;•&nbsp;
-					<a className="underline" href="mailto:babynames@subo.dev?subject=Baby Name Recommendations">
-						suggest names
+					<a className="underline" href="https://www.buymeacoffee.com/soupbowl">
+						donate
 					</a>
 				</p>
 			</div>
