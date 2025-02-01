@@ -7,7 +7,7 @@
 		"ghcr.io/devcontainers/features/docker-in-docker:2": {}
 	},
 	"postCreateCommand": ["npm", "ci"],
-	"postAttachCommand": ["npm", "run", "serve"],
+	"postAttachCommand": ["npm", "start"],
 	"forwardPorts": [3000],
 	"remoteUser": "root"
 }
