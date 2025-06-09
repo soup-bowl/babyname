@@ -17,7 +17,7 @@ import Review, { ReviewProps } from "./Review"
 
 export const DataContext = createContext<NameRecords[]>([])
 
-function ReviewDialog({ updateNameChoices }: ReviewProps) {
+function ReviewDialog({ updateNameChoices }: Readonly<ReviewProps>) {
 	return (
 		<Dialog>
 			<DialogTrigger>

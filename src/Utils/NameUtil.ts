@@ -44,7 +44,10 @@ export const decompressNames = (compressed: string, records: NameRecords[]): Nam
 		.filter((item) => item.id !== undefined)
 }
 
-export const compareNameChoices = (names: NameStorage[], theirNames: NameStorage[]): NameStorage[] => {
+export const compareNameChoices = (
+	names: ReadonlyArray<NameStorage>,
+	theirNames: ReadonlyArray<NameStorage>
+): NameStorage[] => {
 	const nameMap = new Map<string, boolean>()
 
 	theirNames.forEach((item) => {

@@ -32,7 +32,7 @@ import {
 import QrCodeReader from "react-qrcode-reader"
 import { DataContext } from "@/Pages/App"
 
-function ShareDialog({ data, setData }: { data: NameStorage[]; setData: (value: NameStorage[]) => void }) {
+function ShareDialog({ data, setData }: { data: Readonly<NameStorage[]>; setData: (value: NameStorage[]) => void }) {
 	const { toast } = useToast()
 	const names = compressNames(data.map((a) => ({ id: a.id ?? "", Accepted: a.UserAccepted })))
 	const nameData = useContext(DataContext)
@@ -113,7 +113,7 @@ export interface ReviewProps {
 	updateNameChoices: (mustReload?: boolean) => Promise<void>
 }
 
-function Review({ updateNameChoices }: ReviewProps) {
+function Review({ updateNameChoices }: Readonly<ReviewProps>) {
 	const data = useContext(DataContext)
 	const [records, setRecords] = useState<NameStorage[]>([])
 	const [surname] = useLocalStorageSingle("eggsalad-surname", "Smith")

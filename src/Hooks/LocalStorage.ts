@@ -20,7 +20,7 @@ type SetValue<T> = (value: T | ((val: T) => T)) => void
 export function useLocalStorageSingle(key: string, defaultValue: string): [string, SetValue<string>] {
 	const [value, setValue] = useState(() => {
 		const storedValue = window.localStorage.getItem(key)
-		return storedValue !== null ? storedValue : defaultValue
+		return storedValue ?? defaultValue
 	})
 
 	useEffect(() => {

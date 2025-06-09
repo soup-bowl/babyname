@@ -13,7 +13,7 @@ export const AddChoice = async (name: NameRecords, decision: boolean): Promise<v
 
 			return id
 		} catch (error) {
-			console.error(`Failed to add ${name}: ${error}`)
+			console.error(`Failed to add name:`, name, error)
 		}
 	}
 }

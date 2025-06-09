@@ -74,36 +74,34 @@ function Selection() {
 				return "bg-blue-200"
 			case "female":
 				return "bg-pink-200"
-			default:
 			case "universal":
+			default:
 				return "bg-yellow-200"
 		}
 	}
 
 	return (
-		<>
-			<Card className={`text-center text-2xl p-6 max-w-lg w-full mx-4 ${windowColour(name.Gender)}`}>
-				<CardHeader>
-					<CardTitle className="text-4xl">
-						{name.Name}&nbsp;
-						<SurnameDialog />
-					</CardTitle>
-					<CardDescription className="text-2xl">{name.Gender}</CardDescription>
-				</CardHeader>
-				<CardContent>{name.Meaning}</CardContent>
-				<CardFooter className="flex justify-between gap-4">
-					<Button size="lg" className="bg-red-400 hover:bg-red-200" onClick={() => submitNameChoice(false)}>
-						No
-					</Button>
-					<Button size="lg" onClick={() => setName(pickRandomName(data, records))}>
-						Skip
-					</Button>
-					<Button size="lg" className="bg-green-400" onClick={() => submitNameChoice(true)}>
-						Yes
-					</Button>
-				</CardFooter>
-			</Card>
-		</>
+		<Card className={`text-center text-2xl p-6 max-w-lg w-full mx-4 ${windowColour(name.Gender)}`}>
+			<CardHeader>
+				<CardTitle className="text-4xl">
+					{name.Name}&nbsp;
+					<SurnameDialog />
+				</CardTitle>
+				<CardDescription className="text-2xl">{name.Gender}</CardDescription>
+			</CardHeader>
+			<CardContent>{name.Meaning}</CardContent>
+			<CardFooter className="flex justify-between gap-4">
+				<Button size="lg" className="bg-red-400 hover:bg-red-200" onClick={() => submitNameChoice(false)}>
+					No
+				</Button>
+				<Button size="lg" onClick={() => setName(pickRandomName(data, records))}>
+					Skip
+				</Button>
+				<Button size="lg" className="bg-green-400" onClick={() => submitNameChoice(true)}>
+					Yes
+				</Button>
+			</CardFooter>
+		</Card>
 	)
 }
 
